@@ -1,0 +1,140 @@
+﻿.page-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: calc(100vh * .10) calc(100vw * .10);
+    background: linear-gradient(45deg, #F4E7FB, #F3DCDC, #F5BCBA, #E3AADD, #C8A8E9, #C3C7F3);
+    background-size: 200%;
+    animation: backgroundAnim 20s linear infinite;
+}
+
+.box-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    background-color: #F0F8FF;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.form-container {
+    width: 45%;
+    height: 100%;
+    padding: 35px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+}
+
+.form-container h1 {
+    color: #E3AADD;
+    font-size: 28px;
+}
+
+.form-container p {
+    font-size: 16px;
+}
+
+.form-container ::deep form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/*=================================================================
+        Input Custom Color
+==================================================================*/
+.form-container ::deep input {
+    border-radius: 0;
+    border-color: #767F7D;
+}
+
+.form-container ::deep input:hover {
+    border-color: #E3AADD;
+}
+
+.form-container ::deep label,
+.form-container ::deep input:focus ~ label {
+    color: #767F7D;
+}
+
+.form-container ::deep input:hover ~ label,
+.form-container ::deep input:focus:hover ~ label{
+    color: #E3AADD;
+}
+
+.form-container ::deep .input-container {
+    margin: 0;
+}
+
+/*=================================================================
+        Button Style Color
+==================================================================*/
+.btn {
+    width: 100%;
+    padding: 20px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #F0F8FF;
+    background: linear-gradient(45deg, #F5BCBA, #E3AADD, #C8A8E9);
+    background-size: 200%;
+    border: none;
+    cursor: pointer;
+    animation: backgroundAnim 20s linear infinite;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: 0.5s cubic-bezier(.87, -1.38, 0.3, 1.54);
+    filter: grayscale(20%);
+}
+
+.btn:hover {
+    width: calc(100% + 10px);
+    transform: translate(-5px, -5px);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+    filter: grayscale(0);
+}
+
+.btn:active {
+    animation: shake 500ms linear;
+}
+
+.banner {
+    width: 55%;
+    background: url(../imgs/Vivid.png) top center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transition: 0.2s linear;
+}
+
+.banner:hover {
+    width: 65%;
+}
+
+
+@keyframes backgroundAnim {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: rotate(0);
+    }
+
+    20%, 60% {
+        transform: rotate(2deg);
+    }
+
+    40%, 80% {
+        transform: rotate(-2deg);
+    }
+}

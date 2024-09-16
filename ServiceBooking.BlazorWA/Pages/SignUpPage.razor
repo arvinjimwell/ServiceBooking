@@ -1,0 +1,29 @@
+﻿@page "/signup"
+@using ServiceBooking.DTO.UserDto
+
+<div class="page-container">
+    <div class="box-container">
+        <section class="form-container">
+            <h1>Sign Up</h1>
+            <p>Sign up to get started! <br />Create your account and join our community today.</p>
+            <EditForm Model="model">
+                <CInputText @bind-Value="model.FirstName">First Name</CInputText>
+                <CInputText @bind-Value="model.MiddleName">Middle Name</CInputText>
+                <CInputText @bind-Value="model.LastName">Last Name</CInputText>
+                <CInputText @bind-Value="@model.Email" Type="CInputText.InputType.email">Email</CInputText>
+                <CInputText @bind-Value="@model.Password" Type="CInputText.InputType.password">Password</CInputText>
+                <button class="btn" type="submit">Sign Up</button>
+            </EditForm>
+        </section>
+
+        <section class="banner">
+
+        </section>
+    </div>
+</div>
+
+@code {
+    UserInputDTO model = new();
+    
+
+}
