@@ -27,18 +27,35 @@
     justify-content: center;
 }
 
-.form-container h1 {
+.form-container .title h1 {
     color: #E3AADD;
-    font-size: 28px;
+    font-size: 18px;
+    font-weight: bolder;
+}
+
+.form-container .title label {
+    font-size: 24px;
+    color: black;
+    font-weight: 600;
+    font-family: Tahoma;
 }
 
 .form-container p {
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .form-container ::deep form {
     display: flex;
     flex-direction: column;
+    gap: 10px;
+    border-top: 1px solid #767F7D;
+    padding-top: 15px;
+}
+
+.form-container ::deep form .row {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
     gap: 10px;
 }
 
@@ -60,12 +77,23 @@
 }
 
 .form-container ::deep input:hover ~ label,
-.form-container ::deep input:focus:hover ~ label{
+.form-container ::deep input:hover:not(:focus) ~ label {
     color: #E3AADD;
 }
 
 .form-container ::deep .input-container {
     margin: 0;
+    width: 100%;
+}
+
+.form-container ::deep input[type="checkbox"] {
+    margin-left: 5px;
+    accent-color: #E3AADD;
+    cursor: pointer;
+}
+
+.form-container ::deep form .row input ~ label {
+    font-size: 12px;
 }
 
 /*=================================================================
@@ -96,6 +124,25 @@
 
 .btn:active {
     animation: shake 500ms linear;
+}
+
+.form-container .link-container {
+    display: flex;
+    justify-content: center;
+}
+
+.form-container .link-container label {
+    font-size: 14px;
+}
+
+.link-container label ::deep a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #E3AADD;
+}
+
+.link-container label ::deep a:hover {
+    text-decoration: underline;
 }
 
 .banner {
