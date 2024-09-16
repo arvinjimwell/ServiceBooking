@@ -3,6 +3,8 @@ namespace ServiceBooking.DTO.UserDto;
 
 public class ClientDto : UserDTOBase
 {
-    public string[] Bookings = [];
-    public const string Role = "Client";
+    private const string ROLE = "Client";
+
+    public string Role { get { return ROLE; } }
+    public string[] Bookings { get; set; } = []; 
 }

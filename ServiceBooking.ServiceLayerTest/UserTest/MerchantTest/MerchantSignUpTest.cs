@@ -1,21 +1,19 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using ServiceBooking.DataLayer;
 using ServiceBooking.DTO.UserDto;
-using ServiceBooking.ServiceLayer.Users;
+using ServiceBooking.ServiceLayer.UserService;
 using static ServiceBooking.ServiceLayerTest.TestDbContext;
 
-namespace ServiceBooking.ServiceLayerTest;
+namespace ServiceBooking.ServiceLayerTest.UserTest.MerchantTest;
 
 public class MerchantSignUpTest
 {
     private readonly ServiceBookingContext _context;
-    private readonly IUserService _userService;
+    private readonly IMerchantService _userService;
 
     public MerchantSignUpTest()
     {
         _context = CreateContext("MerchantSignUp");
-        _userService = new UserService(_context);
+        _userService = new MerchantService(_context);
     }
 
     [Fact]
@@ -34,7 +32,7 @@ public class MerchantSignUpTest
         int expClientNumber = _context.Clients.Count();
 
         // Act
-        var result = _userService.MerchantSignUp(input, out MerchantDto? merchant, out string errors);
+        var result = _userService.SignUp(input, out MerchantDto? merchant, out string errors);
         int actMerchantNumber = _context.Merchants.Count();
         int actClientNumber = _context.Clients.Count();
 
@@ -45,7 +43,7 @@ public class MerchantSignUpTest
         Assert.Equal(expMerchantNumber, actMerchantNumber);
         Assert.Equal(expClientNumber, actClientNumber);
         Assert.True(merchant.GetType() == typeof(MerchantDto));
-        Assert.True(merchant.Role == "Merchant");
+        Assert.Equal("Merchant", merchant.Role);
     }
 
     [Fact]
@@ -65,7 +63,7 @@ public class MerchantSignUpTest
         int expClientNumber = _context.Clients.Count();
 
         // Act
-        var result = _userService.MerchantSignUp(input, out MerchantDto? merchant, out string errors);
+        var result = _userService.SignUp(input, out MerchantDto? merchant, out string errors);
         int actMerchantNumber = _context.Merchants.Count();
         int actClientNumber = _context.Clients.Count();
 
@@ -76,12 +74,12 @@ public class MerchantSignUpTest
         Assert.Equal(expMerchantNumber, actMerchantNumber);
         Assert.Equal(expClientNumber, actClientNumber);
         Assert.True(merchant.GetType() == typeof(MerchantDto));
-        Assert.True(merchant.Role == "Merchant");
+        Assert.Equal("Merchant", merchant.Role);
         Assert.Equal(input.Email, merchant.Email);
         Assert.Equal(input.FirstName, merchant.FirstName);
         Assert.Equal(input.LastName, merchant.LastName);
         Assert.Equal(input.MiddleName, merchant.MiddleName);
-        foreach(string cn in input.ContactNumber)
+        foreach (string cn in input.ContactNumber)
         {
             Assert.Contains(cn, merchant.ContactNumber);
         }
@@ -96,18 +94,19 @@ public class MerchantSignUpTest
         // Arrange
         UserInputDTO input = new()
         {
-            Email = "test@email.com",
+            Email = "already@email.com",
             FirstName = "John",
             LastName = "Doe",
             ContactNumber = ["+123-1234-123", "321-123-4123", "09123456789"],
             Password = "testpassword",
         };
-        int expMerchantNumber = _context.Merchants.Count();
+        int expMerchantNumber = _context.Merchants.Count() + 1;
         int expClientNumber = _context.Clients.Count();
         string expError = "Email is already registered.";
 
         // Act
-        var result = _userService.MerchantSignUp(input, out MerchantDto? merchant, out string errors);
+        _ = _userService.SignUp(input, out MerchantDto? _, out string _);
+        var result = _userService.SignUp(input, out MerchantDto? merchant, out string errors);
         int actMerchantNumber = _context.Merchants.Count();
         int actClientNumber = _context.Clients.Count();
 
