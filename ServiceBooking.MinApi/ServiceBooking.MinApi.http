@@ -1,0 +1,17 @@
+@ServiceBooking.MinApi_HostAddress = http://localhost:5137
+@merchantendpoint = https://localhost:5091/api/merchants
+
+GET {{ServiceBooking.MinApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+### Try Merchant Sign Up
+POST {{merchantendpoint}}
+Content-Type: application/json
+{
+  "firstName": "Joan",
+  "middleName": "Arc",
+  "lastName": "Mendoza",
+  "email": "joan_mendoza@email.com",
+  "contactNumber": ["123-1234-123", "+63123456789"],
+  "password": "password"
+}

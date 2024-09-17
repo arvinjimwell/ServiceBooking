@@ -23,7 +23,7 @@ public class ServiceBookingContext : DbContext
         {
             SqlConnectionStringBuilder builder = new() {
                 DataSource = "StudentJimwell",
-                InitialCatalog = "ServiceBookingDatabase",
+                InitialCatalog = "ServiceBooking",
                 IntegratedSecurity = true,
                 MultipleActiveResultSets = true,
                 TrustServerCertificate = true,
@@ -44,7 +44,8 @@ public class ServiceBookingContext : DbContext
         {
             model.HasMany(m => m.Businesses)
                 .WithOne(b => b.Merchant)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(b => b.MerchantId)
+                .OnDelete(DeleteBehavior.Restrict);
         });
 
         modelBuilder.Entity<Business>(model =>
@@ -53,7 +54,14 @@ public class ServiceBookingContext : DbContext
 
             model.HasMany(m => m.Services)
                 .WithOne(s => s.Business)
+                .HasForeignKey(s => s.BusinessId)
                 .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<Service>(model =>
+        {
+            model.Property(m => m.Price)
+                .HasPrecision(18, 2);
         });
 
         modelBuilder.Entity<BookServices>(model =>
@@ -62,11 +70,11 @@ public class ServiceBookingContext : DbContext
 
             model.HasOne(m => m.Service)
                 .WithMany(s => s.Bookings)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             model.HasOne(m => m.Client)
                 .WithMany(c => c.Bookings)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
         });
     }
 }

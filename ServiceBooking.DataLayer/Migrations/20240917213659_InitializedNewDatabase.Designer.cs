@@ -12,8 +12,8 @@ using ServiceBooking.DataLayer;
 namespace ServiceBooking.DataLayer.Migrations
 {
     [DbContext(typeof(ServiceBookingContext))]
-    [Migration("20240914230837_InitializedDatabase")]
-    partial class InitializedDatabase
+    [Migration("20240917213659_InitializedNewDatabase")]
+    partial class InitializedNewDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -148,6 +148,7 @@ namespace ServiceBooking.DataLayer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -236,13 +237,13 @@ namespace ServiceBooking.DataLayer.Migrations
                     b.HasOne("ServiceBooking.DataLayer.EntityModels.Client", "Client")
                         .WithMany("Bookings")
                         .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("ServiceBooking.DataLayer.EntityModels.Service", "Service")
                         .WithMany("Bookings")
                         .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Client");
@@ -261,7 +262,7 @@ namespace ServiceBooking.DataLayer.Migrations
                     b.HasOne("ServiceBooking.DataLayer.EntityModels.Merchant", "Merchant")
                         .WithMany("Businesses")
                         .HasForeignKey("MerchantId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("ContactInformation");

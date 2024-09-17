@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServiceBooking.DataLayer;
 
@@ -11,9 +12,11 @@ using ServiceBooking.DataLayer;
 namespace ServiceBooking.DataLayer.Migrations
 {
     [DbContext(typeof(ServiceBookingContext))]
-    partial class ServiceBookingContextModelSnapshot : ModelSnapshot
+    [Migration("20240917214610_MakeAddressOptional")]
+    partial class MakeAddressOptional
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
