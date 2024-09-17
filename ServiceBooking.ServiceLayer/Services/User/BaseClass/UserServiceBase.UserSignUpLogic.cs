@@ -64,12 +64,12 @@ public abstract partial class UserServiceBase
     /// <returns>Return an object to saved in the database</returns>
     /// <exception cref="Exception"></exception>
     private static object ToUserType<TValue>(UserInputDTO input) where TValue : UserDTOBase => 
-    typeof(TValue) switch
-    {
-        Type t when t == typeof(ClientDto) => input.ToClient(),
-        Type t when t == typeof(MerchantDto) => input.ToMerchant(),
-        _ => throw new Exception("Undefined user type.")
-    };
+        typeof(TValue) switch
+        {
+            Type t when t == typeof(ClientDto) => input.ToClient(),
+            Type t when t == typeof(MerchantDto) => input.ToMerchant(),
+            _ => throw new Exception("Undefined user type.")
+        };
     
     /// <summary>
     /// Get the user in the database.
@@ -92,12 +92,12 @@ public abstract partial class UserServiceBase
     /// <returns>Return an object if the query is successful, else null.</returns>
     /// <exception cref="Exception"></exception>
     private object? GetUserByType<TResult>(string username) where TResult : UserDTOBase =>
-    typeof(TResult) switch
-    {
-        Type t when t == typeof(ClientDto) => _dbContext.FindClientByUserNameNoTracking(username),
-        Type t when t == typeof(MerchantDto) => _dbContext.FindMerchantByUserNameNoTracking(username),
-        _ => throw new Exception("Undefined user type.")
-    };
+        typeof(TResult) switch
+        {
+            Type t when t == typeof(ClientDto) => _dbContext.GetUserNoTracking<Client>(username),
+            Type t when t == typeof(MerchantDto) => _dbContext.GetUserNoTracking<Merchant>(username),
+            _ => throw new Exception("Undefined user type.")
+        };
 
     /// <summary>
     /// Cast the object to the a UserType.
@@ -107,10 +107,10 @@ public abstract partial class UserServiceBase
     /// <returns>Return a instance of TResult.</returns>
     /// <exception cref="Exception"></exception>
     private static TResult? CastToTypeDto<TResult>(object value) where TResult : UserDTOBase =>
-    typeof(TResult) switch
-    {
-        Type t when t == typeof(ClientDto) => (value as Client)?.ToUserDto<Client, ClientDto>() as TResult,
-        Type t when t == typeof(MerchantDto) => (value as Merchant)?.ToUserDto<Merchant, MerchantDto>() as TResult,
-        _ => throw new Exception("Undefined user type.")
-    };
+        typeof(TResult) switch
+        {
+            Type t when t == typeof(ClientDto) => (value as Client)?.ToUserDto<Client, ClientDto>() as TResult,
+            Type t when t == typeof(MerchantDto) => (value as Merchant)?.ToUserDto<Merchant, MerchantDto>() as TResult,
+            _ => throw new Exception("Undefined user type.")
+        };
 }
